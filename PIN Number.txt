@@ -1,0 +1,21 @@
+Feature: PIN
+
+  Scenario: Enter PIN
+  
+  
+Given an account number 123456
+    
+When I asked for account PIN number
+    
+Then I should get my PIN number displayed
+
+  
+
+Scenario: Invalid PIN
+    
+Given a minimal checking account balance of $500
+    
+When I enter "WYZ" as my PIN number
+    
+Then I should see a message stating “Invalid PIN number, PIN number can only be a number”
+

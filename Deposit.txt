@@ -1,0 +1,36 @@
+Feature: Deposit
+
+  
+
+Scenario: Deposit of $200
+  
+  
+Given a minimal checking account balance of $500
+    
+When enter deposit dollar amount of $200
+    
+Then I should get a valid deposit amount of $200
+
+  
+
+
+Scenario: Deposit of $0
+ 
+   
+Given a minimal checking account balance of $500
+    
+When enter deposit dollar amount of $0
+    
+Then I should get a valid deposit amount of $0
+
+  
+
+
+Scenario: Wrong amount
+
+    
+Given a minimal checking account balance of $500
+    
+When enter "ABCD"
+    
+Then I should get a message stating: “That’s Not a Number, Please Enter CORRECT Amount”

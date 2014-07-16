@@ -1,0 +1,73 @@
+Feature: Withdrawal
+
+  
+
+
+Scenario: Withdrawal of $200
+    
+
+Given a minimal checking account balance of $500
+    
+When enter dollar amount of $200
+    
+Then I should get a valid withdraw amount of $200
+
+  
+
+
+Scenario: Withdrawal more than balance
+  
+  
+Given a minimal checking account balance of $500
+    
+When enter dollar amount $600
+    
+Then I should get message stating "You dont have sufficient amount of money"
+
+  
+
+
+Scenario: Withdrawal penalty fee
+    
+
+Given a minimal checking account balance of $500
+    
+When enter dollar amount of $200
+    
+Then I should get penalty withdrawal of $35 subtracted from checking account.
+
+  
+
+
+Scenario: account is not active
+    
+
+Given a not active account
+    
+When enter dollar amount of $100
+    
+Then I should get a message stating Your account is not active
+
+  
+
+
+Scenario: Emptying account
+    
+
+Given a minimal checking account balance of $500
+    
+When enter dollar amount of $500
+    
+Then I should get a message stating: Your withdrawal is successful and the current balance is zero
+
+  
+
+
+Scenario: Negative withdrawal
+    
+
+Given a minimal checking account balance of $500
+    
+When enter dollar amount of $ -10
+    
+Then the balance should be $500

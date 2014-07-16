@@ -1,0 +1,154 @@
+package test;
+
+import java.util.Scanner;
+
+import junit.framework.TestCase;
+import account.Account;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
+
+
+
+
+
+public class Steps {
+	
+	
+private Account account;
+	
+private int totalAmount, balance;
+	
+
+
+//Withdrawal
+	
+	
+@Given("^a minimal checking account balance of \\$(\\d+)$")
+	
+public void a_minimal_checking_account_balance_of_$(int arg1) throws Throwable {
+		account = new Account(123456, arg1);
+		totalAmount = arg1;
+		account.setAccountStatus("Active");
+	}
+
+	@When("^enter dollar amount of \\$(\\d+)$")
+	public void enter_dollar_amount_of_$(int arg1) throws Throwable {
+		account.withdraw(200);
+	}
+
+	@Then("^I should get a valid withdraw amount of \\$(\\d+)$")
+	public void I_should_get_a_valid_withdraw_amount_of_$(int arg1) throws Throwable {
+		balance = (int) account.getAccountBalance();
+		TestCase.assertEquals(totalAmount-balance, arg1);
+	}
+
+	@When("^enter dollar amount \\$(\\d+)$")
+	public void enter_dollar_amount_$(int arg1) throws Throwable {
+		account.withdraw(600);
+	}
+
+	@Then("^I should get message stating \"([^\"]*)\"$")
+	public void I_should_get_message_stating(String arg1) throws Throwable { 
+	}
+
+	@Then("^I should get penalty withdrawal of \\$(\\d+) subtracted from checking account.$")
+	public void I_should_get_penalty_withdrawal_of_$_subtracted_from_checking_account(int arg1) throws Throwable {
+		account.withdraw (35);
+	}
+	
+	
+	@Given("^a not active account$")
+	public void a_not_active_account() throws Throwable {
+		account = new Account (123456, 200);
+		account.setAccountStatus("Not Active");
+	}
+
+	@Then("^I should get a message stating Your account is not active$")
+	public void I_should_get_a_message_stating_Your_account_is_not_active() throws Throwable {
+		TestCase.assertEquals(account.getAccountStatus(), "Not Active");
+	}
+	
+	
+	@Then("^I should get a message stating: Your withdrawal is successful and the current balance is zero$")
+	public void I_should_get_a_message_stating_Your_withdrawal_is_successful_and_the_current_balance_is_zero() throws Throwable {
+		}
+
+	@When("^enter dollar amount of \\$ -(\\d+)$")
+	public void enter_dollar_amount_of_$_(int arg1) throws Throwable {
+		account.withdraw(-10);
+	}
+
+	@Then("^the balance should be \\$(\\d+)$")
+	public void the_balance_should_be_$(int arg1) throws Throwable {
+		balance = (int) account.getAccountBalance();
+		TestCase.assertEquals(balance, arg1);
+	}
+	
+	
+	
+//Deposit
+	
+	@When("^enter deposit dollar amount of \\$(\\d+)$")
+	public void enter_deposit_dollar_amount_of_$(int arg1) throws Throwable {
+		account.deposit (200);
+	}
+
+	@Then("^I should get a valid deposit amount of \\$(\\d+)$")
+	public void I_should_get_a_valid_deposit_amount_of_$(int arg1) throws Throwable {
+		balance = (int) account.getAccountBalance();
+		TestCase.assertEquals(account.getAccountBalance()-500, 200.0);
+	}
+	
+	@When("^enter deposit amount of \\$(\\d+)$")
+	public void enter_deposit_amount_of_$(int arg1) throws Throwable {
+		account.deposit (0);
+		}
+	
+	@Then("^I should get a deposit amount of \\$(\\d+)$")
+	public void I_should_get_a_deposit_amount_of_$(int arg1) throws Throwable {
+		balance = (int) account.getAccountBalance();
+		TestCase.assertEquals(account.getAccountBalance()-0, arg1);
+	}
+	
+	@When("^enter \"([^\"]*)\"$")
+	public void enter_ABCD(String arg1) throws Throwable {
+		account.deposit(arg1);
+	}
+	
+	@Then("^I should get a message stating: ?That?s Not a Number, Please Enter CORRECT Amount?$")
+	public void I_should_get_a_message_stating_That_s_Not_a_Number_Please_Enter_CORRECT_Amount() throws Throwable {
+
+	}
+	
+	
+		
+//PIN
+	
+	@Given("^an account number (\\d+)$")
+	public void an_account_number(int arg1) throws Throwable {
+		account = new Account(arg1,500);
+	}
+
+	private int setPin=5555;
+	@When("^I asked for account PIN number$")
+	public void I_asked_for_account_PIN_number() throws Throwable {
+		account.setPinNumber(setPin);
+	}
+
+	@Then("^I should get my PIN number displayed$")
+	public void I_should_get_my_PIN_number_displayed() throws Throwable {
+		TestCase.assertEquals(account.getPinNumber(), setPin);
+	}
+	
+	
+	@When("^I enter \"([^\"]*)\" as my PIN number$")
+	public void I_enter_WYZ_as_my_PIN_number(String arg1) throws Throwable {
+		account.setPinNumber(arg1);
+	}
+
+	@Then("^I should see a message stating ?Invalid PIN number, PIN number can only be a number?$")
+	public void I_should_see_a_message_stating_Invalid_PIN_number_PIN_number_can_only_be_a_number() throws Throwable {
+	}
+
+}
